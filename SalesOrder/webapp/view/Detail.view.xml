@@ -1,0 +1,155 @@
+<mvc:View 
+	controllerName="com.rizing.demo.controller.Detail" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:core="sap.ui.core" 
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form" 
+	xmlns:custom="com.rizing.demo.controls"
+	xmlns:smartForm="sap.ui.comp.smartform" 
+	xmlns:smartField="sap.ui.comp.smartfield"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" >
+	<Page id="detailPage" title="{i18n>detailTitle}">
+		<content>
+			<ObjectHeader
+					id="objectHeader"
+					title="{SoId}"
+					number="{GrossAmount}"
+					numberUnit="{CurrencyCode}"
+					numberState="{= ${GrossAmount} > 3000 ? 'Error' : 'Success' }" >
+			</ObjectHeader>
+			<VBox fitContainer="true">
+				<smartFilterBar:SmartFilterBar 
+					id="smartFilterBar" 
+					entitySet="SalesOrderItemSet" 
+					persistencyKey="SmartFilter_Explored" 
+					basicSearchFieldName="ProductId" 
+					enableBasicSearch="true" >
+					 <!--layout data used to make the table growing but the filter bar fixed--> 
+					<smartFilterBar:layoutData>
+						<FlexItemData shrinkFactor="0"/>
+					</smartFilterBar:layoutData>
+				</smartFilterBar:SmartFilterBar>
+				<smartTable:SmartTable 
+					id="LineItemsSmartTable" 
+					entitySet="SalesOrderItemSet"
+					tableType="ResponsiveTable" 
+					smartFilterId="smartFilterBar"
+					useExportToExcel="false" 
+					useVariantManagement="false" 
+					useTablePersonalisation="true" 
+					header="Line Items" 
+					showRowCount="true" 
+					enableAutoBinding="true" 
+					app:useSmartField="true" 
+					class="sapUiResponsiveContentPadding" 
+					tableBindingPath="SalesOrderItems">
+					<smartTable:layoutData>
+						<FlexItemData growFactor="1" baseSize="0%"/>
+					</smartTable:layoutData>
+				</smartTable:SmartTable>
+			</VBox>
+			<!--<Table id="table">
+				<headerToolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<SearchField placeholder="Product ID" showSearchButton="true" width="50%" search="onSearchFieldSearch"/>
+						<Button icon="sap-icon://popup-window" text="open dialog" press="openDialog"/>	
+						<Button icon="sap-icon://delete" text="delete" press="onDeletePressed"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column>
+						<Text text="Sales Order"/>
+					</Column>
+					<Column>
+						<Text text="Delivery Date"/>
+					</Column>
+					<Column>
+						<Text text="Item Position"/>
+					</Column>
+					<Column>
+						<Text text="Product Id"/>
+					</Column>
+					<Column>
+						<Text text="Gross Amount"/>
+					</Column>
+					<Column>
+						<Text text="Net Amount"/>
+					</Column>
+					<Column>
+						<Text text="Tax Amount"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem id="cli">
+						<cells>
+							<Text text="{SoId}"/>
+							<Text text="{path: 'DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd-MMM-yyyy' }}"/>
+							<Text text="{SoItemPos}"/>
+							<Text text="{ProductId}"/>
+							
+							<ObjectNumber number="{GrossAmount}" state="{= ${GrossAmount} > 5000 ? 'Error' : 'Success' }"/>
+							<ObjectNumber number="{NetAmount}" state="{= ${NetAmount} > 5000 ? 'Error' : 'Success' }"/>
+							<ObjectNumber number="{TaxAmount}" state="{= ${TaxAmount} > 5000 ? 'Error' : 'Success' }"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>-->
+			<Panel expandable="true" expanded="false" headerText="Custom Controls">
+				<f:SimpleForm>
+					<!--<Label text="Standard Switch"/>-->
+					<custom:CustomLabel 
+						id="normalSwitchLabel" 
+						text="Standard Switch" 
+						bgColor="#654321"/>
+					<Switch 
+						id="normalSwitch" 
+						state="true" 
+						ariaLabelledBy="normalSwitchLabel" 
+						change="onSwitchChanged"/>
+					<custom:CustomLabel 
+						id="customSwitchLabel" 
+						text="Custom Switch" 
+						bgColor="#123456"/>
+					<custom:CustomSwitch 
+						id="customSwitch" 
+						state="true" 
+						customTextOn="Yay" 
+						customTextOff="Nay" 
+						ariaLabelledBy="customSwitchLabel" 
+						change="onSwitchChanged"/>
+					<!--<custom:CustomSwitch id="customSwitch" state="true" />-->
+				</f:SimpleForm>
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="Smart Controls">
+				<smartForm:SmartForm id="smartForm"
+					app:defaultCheckBoxDisplayBehaviour="OnOff"
+					app:defaultDropDownDisplayBehaviour="idAndDescription"
+					editTogglable="true">
+					<smartForm:Group label="This is Smartform Group">
+						<smartForm:GroupElement>
+							<smartField:SmartField value="{TaxAmount}" />
+						</smartForm:GroupElement>
+						<smartForm:GroupElement>					
+							<smartField:SmartField value="{CurrencyCode}" />
+						</smartForm:GroupElement>
+					</smartForm:Group>
+				</smartForm:SmartForm>
+			</Panel>
+			<Panel expandable="true" expanded="false" headerText="Function Import">
+				<Toolbar>
+					<ToolbarSpacer/>
+					<Button text="Call Function Import" press="callFI" visible="true"/>
+				</Toolbar>
+				<f:SimpleForm>
+					<Label text="Function Called" />
+					<custom:CustomSwitch customTextOn="Yes" customTextOff="No" id="functionCalledSwitch" enabled="false"/>
+					<Label text="Return Text"/>
+					<Text id="returnText"/>
+				</f:SimpleForm>
+			</Panel>
+		</content>
+	</Page>
+</mvc:View>

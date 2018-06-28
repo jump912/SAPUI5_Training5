@@ -1,0 +1,10 @@
+[{
+	"Code": "USD",
+	"Description": "US Dollar"
+}, {
+	"Code": "MYR",
+	"Description": "Malaysian Ringgit"
+}, {
+	"Code": "EUR",
+	"Description": "Euro"
+}]

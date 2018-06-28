@@ -1,0 +1,17 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog 
+		title="Confirm to delete?">
+		<f:SimpleForm> <!-- is there a reason to use smartform here? -->
+			<Text text="Sales Order ID: {SoId}"/>
+		</f:SimpleForm>
+		<beginButton>
+			<Button text="{i18n>deleteSOYes}" press="onConfirmDeletePressed"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>deleteSONo}" press="onCancelDeletePressed"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
